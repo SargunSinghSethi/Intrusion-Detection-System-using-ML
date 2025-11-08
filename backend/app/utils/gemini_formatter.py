@@ -4,7 +4,7 @@ import google.generativeai as genai
 from typing import Dict, Any
 
 # Configure Gemini
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyD7sQe85tFm2cU9KR2sDedG5sEi0JSDEg4")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "GEMINI_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
