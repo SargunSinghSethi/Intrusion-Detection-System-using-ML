@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./csv_files:/app/csv_files
+      - ./app:/app/app
+      - ./app/models/xgboost_model.joblib:/app/app/models/xgboost_model.joblib
+      - ./app/models/random_forest_model.joblib:/app/app/models/random_forest_model.joblib
+      - ./app/models/xgboost_top20.joblib:/app/app/models/xgboost_top20.joblib
+      - ./app/models/xgboost_top20.joblib:/app/app/models/rf_top20.joblib
+      - ./app/models/xgboost_top20.joblib:/app/app/models/lr.joblib
+      - ./app/models/standard_scaler.pkl:/app/app/models/standard_scaler.pkl
+
+    environment:
+      - DATABASE_URL=sqlite:///./ids_database.db
+      - CLERK_JWKS_URL=${CLERK_JWKS_URL}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - UPLOAD_FOLDER=uploads
+      - CSV_FOLDER=csv_files
+      - MODEL_PATH=${MODEL_PATH}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
